@@ -8,7 +8,7 @@ public class Negozio {
         RegistratoreCassa registratore = new RegistratoreCassa();
 
         // Aggiungo alcuni prodotti al listino
-        registratore.getListino().add(new Prodotto("Pane", 5, 104));
+        registratore.getListino().add(new Prodotto("Pane", 5, 101));
         registratore.getListino().add(new Prodotto("Latte", 3, 102));
         registratore.getListino().add(new Prodotto("Uova", 6, 103));
 
