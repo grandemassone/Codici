@@ -2,6 +2,8 @@ package terzaLezione.primoEsercizio;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class LetturaFile {
@@ -9,30 +11,39 @@ public class LetturaFile {
         File usFile = new File("/Users/grandemassone/Desktop/Davide/Università/POO/Teoria tutorato POO/src/terzaLezione/primoEsercizio/file.txt");
         Scanner sf = new Scanner(usFile);
 
-        while (sf.hasNextLine()) {
-            String nome = sf.nextLine();   // Read the name
+        List<Record> records = new ArrayList<>();
+        int numeroOperazioni = 0;
+        double importoAcquisto = 0;
+        double importoVendita = 0;
 
-            // Check if the next token is a double
-            if (sf.hasNextDouble()) {
-                double importo = sf.nextDouble();  // Read the double
+        // Reading the file
+        while (sf.hasNext()) {
+            String nome = sf.next();  // Read the name
+            double importo = sf.nextDouble();
+            int quantita = sf.nextInt();
+            char operazione = sf.next().charAt(0);
 
-                // Check if the next token is an integer
-                if (sf.hasNextInt()) {
-                    int quantita = sf.nextInt();// Read the integer
-                    char operazione = sf.next().charAt(0);  // Read the char
+            // Create a new Record object and add it to the list
+            Record record = new Record(nome, importo, quantita, operazione);
+            records.add(record);
 
-                    // Output the values to check
-                    System.out.println("Nome: " + nome);
-                    System.out.println("Importo: " + importo);
-                    System.out.println("Quantità: " + quantita);
-                    System.out.println("Operazione: " + operazione);
-                }
+            // Update counters and sums
+            numeroOperazioni++;
+            if (operazione == 'S') {
+                importoAcquisto += importo * quantita;
+            } else if (operazione == 'B') {
+                importoVendita += importo * quantita;
             }
-            // Move to the next line after reading all values
-            if (sf.hasNextLine()) {
-                sf.nextLine(); // Consume the newline after char
-            }
+
+            // Output the record (optional, for debugging)
+            System.out.println(record);
         }
+
         sf.close();
+
+        // Print the final results
+        System.out.println("\nNumero Operazioni: " + numeroOperazioni);
+        System.out.println("Totale Importo Acquisto (S): " + importoAcquisto);
+        System.out.println("Totale Importo Vendita (B): " + importoVendita + "\n");
     }
 }
